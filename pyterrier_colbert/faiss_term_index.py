@@ -39,6 +39,7 @@ class FaissNNTerm():
             args.query_maxlen = 32
             args.doc_maxlen = 180
             args.mask_punctuation = False
+            args.modelname = 'bert-base-mixed'
             self.colbert, args.checkpoint = load_colbert(args)
         else:
             self.colbert = colbert

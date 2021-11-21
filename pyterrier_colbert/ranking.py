@@ -205,7 +205,7 @@ class re_ranker_mmap:
 class ColBERTFactory():
 
     def __init__(self, 
-            colbert_model : Union[str, Tuple[colbert.modeling.colbert.ColBERT, dict]], 
+            colbert_model : Union[str, Tuple[colbert.modeling.colbert.ColBERTMixed, dict]], 
             index_root : str, 
             index_name : str,
             faiss_partitions=None,#TODO 100-
@@ -224,6 +224,7 @@ class ColBERTFactory():
         args.part_range = None
         args.mask_punctuation = False
         args.partitions = faiss_partitions
+        args.modelname = 'bert-base-mixed'
 
         self.verbose = False
         self._faissnn = None
@@ -263,8 +264,8 @@ class ColBERTFactory():
         else:
             assert isinstance(colbert_model, tuple)
             args.colbert, args.checkpoint = colbert_model
-            from colbert.modeling.colbert import ColBERT
-            assert isinstance(args.colbert, ColBERT)
+            from colbert.modeling.colbert import ColBERTMixed
+            assert isinstance(args.colbert, ColBERTMixed)
             assert isinstance(args.checkpoint, dict)
             
         args.inference = ModelInference(args.colbert, amp=args.amp)
